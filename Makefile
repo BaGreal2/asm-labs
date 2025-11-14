@@ -1,17 +1,20 @@
 .SUFFIXES:
 
 SOURCES := $(wildcard *.s)
-BINS    := $(SOURCES:.s=)
-OBJS    := $(SOURCES:.s=.o)
+BINS    := $(patsubst %.s,bin/%,$(SOURCES))
+OBJS    := $(patsubst %.s,%.o,$(SOURCES))
 
 .PHONY: all clean
 all: $(BINS)
 
-%: %.o
+bin/%: %.o | bin
 	ld -m elf_i386 -o $@ $<
 
 %.o: %.s
 	as --32 -g -o $@ $<
 
+bin:
+	mkdir -p bin
+
 clean:
-	rm -f $(BINS) $(OBJS)
+	rm -f $(OBJS) $(BINS)
