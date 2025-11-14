@@ -1,9 +1,17 @@
-task-01: task-01.o
-	ld -m elf_i386 -o $@ $^
+.SUFFIXES:
 
-task-01.o: task-01.s
+SOURCES := $(wildcard *.s)
+BINS    := $(SOURCES:.s=)
+OBJS    := $(SOURCES:.s=.o)
+
+.PHONY: all clean
+all: $(BINS)
+
+%: %.o
+	ld -m elf_i386 -o $@ $<
+
+%.o: %.s
 	as --32 -g -o $@ $<
 
-.PHONY: clean
 clean:
-	rm -f task-01 task-01.o
+	rm -f $(BINS) $(OBJS)

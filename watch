@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+REMOTE="akravch1@mars.edu.cdv.pl:~/asm-learn/"
+
+export REMOTE
+
+while true; do
+  find . -type f ! -path "./.git/*" | entr -d -r bash -c '
+    shopt -s dotglob nullglob
+    scp -C -p -r $(ls -A | grep -v "^\.git$") "$REMOTE" &&
+    echo "$(date "+%F %T") pushed all -> $REMOTE"
+  '
+done
