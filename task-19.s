@@ -1,4 +1,6 @@
-# Write a program to calculate in the EAX register the mean value of the items in an array of integers, ignoring the fractional part.
+# Write a program to calculate in the EAX register the mean value of the items
+# in an array of integers, ignoring the fractional part.
+
 .data
   .array: .long 4, -5, 7, 9, -2, 5, 8
   .end_array:
